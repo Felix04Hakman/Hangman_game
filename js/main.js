@@ -1,6 +1,9 @@
-const passWord = 'NO PAIN, ON GAIN!'
+const passWord = 'BEZ PRACY NIE MA KOŁACZY'
 let longWord = passWord.length
 let secretWord = ''
+let howMuchMiss = 0
+let yes = new Audio('./audio/yes.wav')
+let no = new Audio('./audio/no.wav')
 
 for (i = 0; i < longWord; i++) {
 	if (passWord.charAt(i) === ' ') {
@@ -60,49 +63,11 @@ words[33] = 'Ż'
 words[34] = 'Ź'
 words[34] = 'Ź'
 
-// let letters = [
-// 	'A',
-// 	'Ą',
-// 	'B',
-// 	'C',
-// 	'Ć',
-// 	'D',
-// 	'E',
-// 	'Ę',
-// 	'F',
-// 	'G',
-// 	'H',
-// 	'I',
-// 	'Ą',
-// 	'K',
-// 	'L',
-// 	'Ł',
-// 	'M',
-// 	'N',
-// 	'Ń',
-// 	'O',
-// 	'Ó',
-// 	'P',
-// 	'Q',
-// 	'R',
-// 	'S',
-// 	'Ś', 
-// 	'T',
-// 	'U',
-// 	'V',
-// 	'W',
-// 	'X',
-// 	'Y',
-// 	'Z',
-// 	'Ż',
-// 	'Ź',
-// 	'Ź',
-// ]
 function startWords() {
 	let contentDiv = ''
 	for (let i = 0; i < 35; i++) {
-		let element = 'lit' + i
-		contentDiv += '<div class="litera"  onclick="checkIt(' + i + ')" id="' + element + '">' + words[i] + '</div>'
+		let element = `lit${i}`
+		contentDiv += `<div class="litera"  onclick="checkIt(${i})" id="${element}">${words[i]}</div>`
 		if ((i + 1) % 7 == 0) contentDiv += '<div style="clear:both"></div>'
 	}
 	document.getElementById('alfabet').innerHTML = contentDiv
@@ -110,16 +75,52 @@ function startWords() {
 	getPassword()
 }
 
-String.prototype.SetSign = function(place,sign)
-{
-	 if(place > this.length - 1) return this.toString();
+String.prototype.SetSign = function (place, sign) {
+	if (place > this.length - 1) return this.toString()
+	else return this.substring(0, place) + sign + this.substring(place + 1)
 }
 
 function checkIt(n) {
+	let hit = false
+
 	for (let i = 0; i < longWord; i++) {
 		if (passWord.charAt(i) == words[n]) {
-			secretWord.charAt(i) = words[n];
+			secretWord = secretWord.SetSign(i, words[n])
+			hit = true
 		}
 	}
-}
+	if (hit == true) {
+		yes.play()
+		let element = `lit${n}`
+		document.getElementById(element).style.background = '#003300'
+		document.getElementById(element).style.color = '#00C000'
+		document.getElementById(element).style.border = '3px solid #00c000'
+		document.getElementById(element).style.cursor = 'default'
 
+		getPassword()
+	} else {
+		no.play()
+		let element = `lit${n}`
+		document.getElementById(element).style.background = '#330000'
+		document.getElementById(element).style.color = '#C00000'
+		document.getElementById(element).style.border = '#3px solid #c00000'
+		document.getElementById(element).style.cursor = 'default'
+
+		document.getElementById(element).setAttribute('onclick', ';')
+
+		//Lost opportunities
+		howMuchMiss++
+		let imageSrc = `./img/s${howMuchMiss}.jpg`
+		document.getElementById('szubienica').innerHTML = `<img src="${imageSrc}" alt=""/>`
+	}
+	//victory
+	if (passWord === secretWord)
+		document.getElementById(
+			'alfabet'
+		).innerHTML = `Tak jest! Podano prawidłowe hasło: ${passWord}<span class="reset" onclick="location.reload()">JESZCZE RAZ MOŻE SPRÓBUJESZ?</span>`
+
+	//defeat
+	if (howMuchMiss >= 9)
+		document.getElementById('alfabet').innerHTML =
+			'Przegrałeś! Próbuj dalej!<span class="badReset" onclick="location.reload()">JESZCZE RAZ?</span>'
+}
