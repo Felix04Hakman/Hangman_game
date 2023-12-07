@@ -1,0 +1,91 @@
+html {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ol,
+ul {
+	margin: 0;
+	padding: 0;
+	font-weight: normal;
+}
+img {
+	max-width: 100%;
+	height: auto;
+}
+body {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100vw;
+	height: 100vh;
+}
+#container {
+	width: 90%;
+	margin: 50px;
+	background-color: #000;
+	color: lightgrey;
+	font-size: 28px;
+}
+#head {
+	width: 100%;
+	min-width: 600px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+#plansza {
+	width: 1500px;
+	margin: 100px;
+	text-align: center;
+	font-size: 48px;
+	min-height: 200px;
+}
+#main {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: row;
+}
+#szubienica {
+	width: 864px;
+	text-align: center;
+	min-height: 480px;
+}
+#szubienica > img {
+	width: 600px;
+}
+#alfabet {
+	width: 524px;
+	max-height: 480px;
+	text-align: center;
+	margin: 10px;
+	display: flex;
+	flex-wrap: wrap;
+	align-content: flex-start;
+	align-items: center;
+}
+.litera {
+	width: 40px;
+	height: 40px;
+	text-align: center;
+	padding: 18px 5px 5px 5px;
+	margin: 5px;
+	border: 3px solid grey;
+	cursor: pointer;
+	border-radius: 30%;
+}
+.litera:hover {
+	background-color: #222;
+	color: #fff;
+	border: 3px solid white;
+}
