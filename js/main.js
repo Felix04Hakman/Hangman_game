@@ -118,9 +118,7 @@ function checkIt(n) {
 		document.getElementById(
 			'alfabet'
 		).innerHTML = `Tak jest! Podano prawidłowe hasło: ${passWord}<span class="reset" onclick="location.reload()">JESZCZE RAZ MOŻE SPRÓBUJESZ?</span>`
-
-	//defeat
-	if (howMuchMiss >= 9)
+git 
 		document.getElementById('alfabet').innerHTML =
 			'Przegrałeś! Próbuj dalej!<span class="badReset" onclick="location.reload()">JESZCZE RAZ?</span>'
 }
